@@ -1,0 +1,15 @@
+api - API dependencies for source set 'main'. (n)
++--- com.fasterxml.jackson.core:jackson-core:2.13.3 (n)
++--- com.fasterxml.jackson.core:jackson-annotations:2.13.3 
++--- project custom-entity (n)
+\--- project account-ms-client (n) 
+
+
+compileClasspath - Compile classpath for source set 'main'.
++--- com.fasterxml.jackson.core:jackson-core:2.13.3 -> 2.13.5
+|    \--- com.fasterxml.jackson:jackson-bom:2.13.5
+|         +--- com.fasterxml.jackson.core:jackson-annotations:2.13.5 (c)
+|         +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.13.5 (c)
+|         \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.13.5 (c)
++--- com.fasterxml.jackson.core:jackson-annotations:2.13.3 -> 2.13.5 (n)
+     \--- com.fasterxml.jackson:jackson-bom:2.13.5 (*) 

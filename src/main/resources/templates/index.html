@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dependency Graph</title>
+</head>
+<body>
+<h1>Upload Dependencies Log</h1>
+<form method="post" enctype="multipart/form-data" th:action="@{/generate}">
+    <input type="file" name="file"/>
+    <button type="submit">Generate Graph</button>
+</form>
+<p th:text="${message}"></p>
+</body>
+</html>

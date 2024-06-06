@@ -1,0 +1,22 @@
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :assemble
+> Task :compileTestJava
+> Task :processTestResources
+> Task :testClasses
+> Task :test
+> Task :check
+> Task :build
+
+
+compileClasspath - Compile classpath for source set 'main'.
++--- com.fasterxml.jackson.core:jackson-core:2.13.3 -> 2.13.5
+|    \--- com.fasterxml.jackson:jackson-bom:2.13.5
+|         +--- com.fasterxml.jackson.core:jackson-annotations:2.13.5 (c)
+|         +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.13.5 (c)
+|         \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.13.5 (c)
++--- com.fasterxml.jackson.core:jackson-annotations:2.13.3 -> 2.13.5
+     \--- com.fasterxml.jackson:jackson-bom:2.13.5 (*) 
+

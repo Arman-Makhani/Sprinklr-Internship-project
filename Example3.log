@@ -1,0 +1,14 @@
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :compileTestJava
+> Task :processTestResources
+
+
+api - API dependencies for source set 'main'. (n)
++--- com.fasterxml.jackson.core:jackson-core:2.13.3 (n)
++--- com.fasterxml.jackson.core:jackson-annotations:2.13.3 (n)
++--- project custom-entity (n)
+\--- project account-ms-client (n) 
+

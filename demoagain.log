@@ -1,0 +1,23 @@
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :assemble
+> Task :compileTestJava
+> Task :processTestResources
+> Task :testClasses
+> Task :test
+> Task :check
+> Task :build
+
+Resolved dependencies:
++--- project :core
+|    \--- project :api
++--- project :api
+|    +--- org.apache.logging.log4j:log4j-api:2.14.0
+|    \--- org.apache.logging.log4j:log4j-core:2.14.0
+\--- org.springframework.boot:spring-boot-starter-web -> 2.5.2
+     +--- org.springframework.boot:spring-boot-starter:2.5.2
+     +--- org.springframework.boot:spring-boot-starter-json:2.5.2
+     \--- org.springframework.boot:spring-boot-starter-tomcat:2.5.2
+
