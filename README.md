@@ -32,7 +32,7 @@ Before you begin, ensure you have the following installed:
 
 1. **Clone the Repository**:
     ```bash
-    git clone https://github.com/Arman-Makhani/Sprinklr-Internship-project
+    git clone https://github.com/Arman-Makhani/Sprinklr-Internship-project.git
     cd dependency-graph-visualizer
     ```
 
