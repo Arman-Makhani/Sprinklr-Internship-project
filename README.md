@@ -1,12 +1,37 @@
-This project tries and helps a developer visualize the gradle dependencies in a graph format using Graphviz. The project has three main classes.
+# Dependency Graph Visualizer
 
--GraphController class is a Spring MVC controller that handles web requests related to graph generation , search and export functionalities. It mainly works wwith Spring's dependency injection , asynchronous processing and web request handling capabilities to manage file uploads , process data and generate responses efficiently. 
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+3. [Running the Project](#running-the-project)
+4. [Project Structure](#project-structure)
+5. [Usage Guide](#usage-guide)
+6. [Developer Guide](#developer-guide)
+    - [Prerequisites for Development](#prerequisites-for-development)
+    - [Understanding the Code](#understanding-the-code)
+    - [Extending the Project](#extending-the-project)
+7. [FAQ](#faq)
+8. [Contributing](#contributing)
+9. [License](#license)
 
--GraphService class is a Spring service which helps in managing and visualizing dependency graphs. It uses Graphviz for rendering graphs , Spring's @Async for asynchronous processing , it handles and visualizing dependencies , including handling circular dependencies.
+## Introduction
+The Dependency Graph Visualizer is a tool designed to convert Gradle dependency logs into interactive and visual dependency graphs. It helps users understand their project's dependencies, identify issues such as unresolved dependencies, and detect circular dependencies.
 
--DependencyParser class provides functionality to read and parse dependency data. It supports chunking the data for efficient processing , handles hierarchical dependencies using indentation level and tries to extract information about each dependency (even their version conflicts , still work in progress).
+## Getting Started
 
-Index and Result handles the frontend part of it . 
-NOTE : You might have to wait for a few minutes if the dependencies.log file is too huge.
+### Prerequisites
+Before you begin, ensure you have the following installed:
 
-//THE CODE IS WORKING AT THE MOMENT . BUT STILL THERE ARE SOME THINGS TO IMPROVE AND ADD , SO IT IS A WORK IN PROGRESS.
+- **Java Development Kit (JDK)**: Ensure you have JDK 20 or later installed. You can download it from [Oracle's website](https://www.oracle.com/java/technologies/javase/jdk20-archive-downloads.html).
+- **Graphviz**: For rendering graphs. Install Graphviz from [Graphviz's official website](https://graphviz.org/download/).
+- **Spring Boot**: Ensure you have Spring Boot installed. Spring Boot simplifies the creation of stand-alone, production-grade Spring-based applications.
+- **Gradle**: Make sure you have Gradle installed to handle dependencies and builds. Install it from [Gradle's official website](https://gradle.org/install/).
+
+### Installation
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/yourusername/dependency-graph-visualizer.git
+   cd dependency-graph-visualizer
