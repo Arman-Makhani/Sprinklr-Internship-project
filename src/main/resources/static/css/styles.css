@@ -1,0 +1,60 @@
+body {
+    background-color: lightyellow;
+}
+.search-container {
+    position: relative;
+    display: inline-block;
+    width: 300px;
+}
+.search-input {
+    width: calc(100% - 30px);
+    padding-right: 30px;
+    box-sizing: border-box;
+}
+.reset-btn {
+    background: none;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.export-btn {
+    margin-top: 20px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.highlight-btn {
+    margin-top: 20px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.tooltip {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    display: none;
+    z-index: 1000;
+}
+.warning-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="yellow" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86l-9.17 15.8a2 2 0 0 0 1.71 3h18.34a2 2 0 0 0 1.71-3l-9.17-15.8a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12" y2="17"></line></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    margin-left: 5px;
+}
+.circular-dependency {
+    animation: blink 1s infinite;
+    stroke: red !important;
+}
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}

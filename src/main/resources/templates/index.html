@@ -2,13 +2,58 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dependency Graph</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            padding: 30px;
+            background: #ffffff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+        .btn-upload {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background 0.3s;
+        }
+        .btn-upload:hover {
+            background: #0056b3;
+        }
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            color: #ff0000;
+        }
+    </style>
 </head>
 <body>
-<h1>Upload Dependencies Log</h1>
-<form method="post" enctype="multipart/form-data" th:action="@{/generate}">
-    <input type="file" name="file"/>
-    <button type="submit">Generate Graph</button>
-</form>
-<p th:text="${message}"></p>
+<div class="container">
+    <h1>Upload Dependencies Log</h1>
+    <form method="post" enctype="multipart/form-data" th:action="@{/generate}">
+        <input type="file" name="file" class="form-control" required/>
+        <button type="submit" class="btn-upload">Generate Graph</button>
+    </form>
+    <p class="message" th:text="${message}"></p>
+</div>
 </body>
 </html>

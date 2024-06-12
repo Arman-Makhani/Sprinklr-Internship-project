@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Graph Result</title>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    //whatever
     <style>
         .search-container {
             position: relative;
@@ -47,7 +48,7 @@
             display: inline-block;
             width: 16px;
             height: 16px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="yellow" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86l-9.17 15.8a2 2 0 0 0 1.71 3h18.34a2 2 0 0 0 1.71-3l-9.17-15.8a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12" y2="17"></line></svg>'); /* Add your warning icon path here */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="yellow" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86l-9.17 15.8a2 2 0 0 0 1.71 3h18.34a2 2 0 0 0 1.71-3l-9.17-15.8a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12" y2="17"></line></svg>');
             background-size: contain;
             background-repeat: no-repeat;
             cursor: pointer;
@@ -62,124 +63,16 @@
                 opacity: 0;
             }
         }
+        .note {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            font-size: 0.9em;
+            color: #333;
+        }
     </style>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script>
-        $(function() {
-            $("#searchTerm").autocomplete({
-                source: function(request, response) {
-                    $.ajax({
-                        url: "/autocomplete",
-                        dataType: "json",
-                        data: {
-                            term: request.term
-                        },
-                        success: function(data) {
-                            response(data);
-                        }
-                    });
-                },
-                minLength: 2,
-                select: function(event, ui) {
-                    $("#searchTerm").val(ui.item.value);
-                    searchGraph();
-                    return false;
-                }
-            }).on('focus', function() {
-                $(this).autocomplete("search");
-            });
-
-            $("#searchTerm").on("input", function() {
-                searchGraph();
-            });
-
-            $("#searchForm").on("submit", function() {
-                $("#searchTerm").focus();
-            });
-
-            $("#exportPng").on("click", function() {
-                window.location.href = "/export/png?fileName=graph.png";
-            });
-
-            $("#highlightCircularDeps").on("click", function() {
-                $(".edge").removeClass("circular-dependency");
-                $.ajax({
-                    url: "/circular-dependencies",
-                    dataType: "json",
-                    success: function(data) {
-                        data.forEach(function(edge) {
-                            $(`g.edge > title:contains('${edge}')`).parent().addClass("circular-dependency");
-                        });
-                    }
-                });
-            });
-
-            $(document).on("click", function() {
-                $(".edge").removeClass("circular-dependency");
-            });
-
-            $('body').on('mouseenter', 'g.node', function(e) {
-                const title = $(this).find('title').text();
-                const details = title.split(':');
-                const data = {};
-
-                if (details.length > 0) {
-                    data["Group"] = details[0];
-                }
-                if (details.length > 1) {
-                    data["Name"] = details[1];
-                }
-                if (details.length > 2) {
-                    data["Version"] = details[2];
-                }
-                const configuration = $(this).attr('data-configuration'); // Extract configuration from data attribute
-                if (configuration) {
-                    data["Configuration"] = configuration;
-                }
-
-                let tooltipHtml = '';
-                for (const [key, value] of Object.entries(data)) {
-                    tooltipHtml += `<div><strong>${key}:</strong> ${value}</div>`;
-                }
-
-                const conflict = $(this).attr('data-conflict');
-                if (conflict) {
-                    tooltipHtml += `<div class="warning-icon" data-tooltip="${conflict}"></div>`;
-                }
-
-                $('.tooltip').html(tooltipHtml).css({
-                    top: e.pageY + 5,
-                    left: e.pageX + 5
-                }).show();
-            });
-
-            $('body').on('mouseleave', 'g.node', function() {
-                $('.tooltip').hide();
-            });
-
-            $('body').on('mouseenter', '.warning-icon', function(e) {
-                const conflict = $(this).attr('data-tooltip');
-                $('.tooltip').html(conflict).css({
-                    top: e.pageY + 5,
-                    left: e.pageX + 5
-                }).show();
-            });
-
-            $('body').on('mouseleave', '.warning-icon', function() {
-                $('.tooltip').hide();
-            });
-        });
-
-        function searchGraph() {
-            document.getElementById('searchForm').submit();
-        }
-
-        function resetGraph() {
-            document.getElementById('searchTerm').value = '';
-            searchGraph();
-        }
-    </script>
 </head>
 <body>
 <div>
@@ -196,7 +89,130 @@
     <div th:each="svg : ${graphs}">
         <div th:utext="${svg}"></div>
     </div>
+    <div class="note">
+        <strong>Note:</strong><br>
+        - <span style="color: lightcoral;">(n)</span> represents not resolved dependencies.<br>
+        - <span style="color: greenyellow;">(c)</span> represents constraints.<br>
+        - <span style="color: yellow;">(*)</span> represents omitted or previously used dependencies.
+    </div>
     <div class="tooltip"></div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $(function() {
+        $("#searchTerm").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "/autocomplete",
+                    dataType: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 2,
+            select: function(event, ui) {
+                $("#searchTerm").val(ui.item.value);
+                searchGraph();
+                return false;
+            }
+        }).on('focus', function() {
+            $(this).autocomplete("search");
+        });
+
+        $("#searchTerm").on("input", function() {
+            searchGraph();
+        });
+
+        $("#searchForm").on("submit", function() {
+            $("#searchTerm").focus();
+        });
+
+        $("#exportPng").on("click", function() {
+            window.location.href = "/export/png?fileName=graph.png";
+        });
+
+        $("#highlightCircularDeps").on("click", function() {
+            $(".edge").removeClass("circular-dependency");
+            $.ajax({
+                url: "/circular-dependencies",
+                dataType: "json",
+                success: function(data) {
+                    data.forEach(function(edge) {
+                        $(`g.edge > title:contains('${edge}')`).parent().addClass("circular-dependency");
+                    });
+                }
+            });
+        });
+
+        $(document).on("click", function() {
+            $(".edge").removeClass("circular-dependency");
+        });
+
+        $('body').on('mouseenter', 'g.node', function(e) {
+            const title = $(this).find('title').text();
+            const details = title.split(':');
+            const data = {};
+
+            if (details.length > 0) {
+                data["Group"] = details[0];
+            }
+            if (details.length > 1) {
+                data["Name"] = details[1];
+            }
+            if (details.length > 2) {
+                data["Version"] = details[2];
+            }
+            const configuration = $(this).attr('data-configuration');
+            if (configuration) {
+                data["Configuration"] = configuration;
+            }
+
+            let tooltipHtml = '';
+            for (const [key, value] of Object.entries(data)) {
+                tooltipHtml += `<div><strong>${key}:</strong> ${value}</div>`;
+            }
+
+            const conflict = $(this).attr('data-conflict');
+            if (conflict) {
+                tooltipHtml += `<div class="warning-icon" data-tooltip="${conflict}"></div>`;
+            }
+
+            $('.tooltip').html(tooltipHtml).css({
+                top: e.pageY + 5,
+                left: e.pageX + 5
+            }).show();
+        });
+
+        $('body').on('mouseleave', 'g.node', function() {
+            $('.tooltip').hide();
+        });
+
+        $('body').on('mouseenter', '.warning-icon', function(e) {
+            const conflict = $(this).attr('data-tooltip');
+            $('.tooltip').html(conflict).css({
+                top: e.pageY + 5,
+                left: e.pageX + 5
+            }).show();
+        });
+
+        $('body').on('mouseleave', '.warning-icon', function() {
+            $('.tooltip').hide();
+        });
+    });
+
+    function searchGraph() {
+        document.getElementById('searchForm').submit();
+    }
+
+    function resetGraph() {
+        document.getElementById('searchTerm').value = '';
+        searchGraph();
+    }
+</script>
 </body>
 </html>

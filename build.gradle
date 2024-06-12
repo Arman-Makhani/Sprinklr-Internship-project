@@ -30,6 +30,20 @@ dependencies {
 	implementation 'guru.nidi:graphviz-java:0.18.1'
 	implementation 'org.apache.xmlgraphics:batik-transcoder:1.14'
 	implementation 'org.apache.xmlgraphics:batik-codec:1.14'
+	//implementation 'org.apache.xmlgraphics:batik-transcoder:1.14'
+
+
+
+//	implementation 'org.webjars:webjars-locator-core'
+//	//implmentation 'org.webjars:d3:7.3.0'
+//	implementation 'org.webjars:jquery:3.6.0'
+//	implementation 'org.webjars:jquery-ui:1.12.1'
+//	implementation group: 'org.webjars.bower', name: 'd3', version: '5.15.0'
+//	implementation 'org.webjars:webjars-locator:0.46'
+//	implementation 'org.webjars.npm:d3:7.3.0'
+
+
+
 
 
 }

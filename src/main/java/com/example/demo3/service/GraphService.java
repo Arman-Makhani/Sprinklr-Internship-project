@@ -50,7 +50,7 @@ public class GraphService {
         for (Map<String, Map<String, List<String>>> chunk : allChunks) {
             MutableGraph g = mutGraph("dependencies").setDirected(true).graphAttrs().add("rankdir", "LR");
             Map<String, MutableNode> nodes = new HashMap<>();
-            Set<String> addedEdges = new HashSet<>(); // Track added edges
+            Set<String> addedEdges = new HashSet<>();
 
             for (Map.Entry<String, Map<String, List<String>>> titleEntry : chunk.entrySet()) {
                 String title = titleEntry.getKey();
@@ -67,7 +67,8 @@ public class GraphService {
                         String label = String.format("%s:%s:%s", parentDetails.group, parentDetails.name, parentDetails.version);
                         if (parentDetails.conflictVersion != null) {
                             label += " ⚠";
-                            parentNode.add("data-conflict", String.format("Conflict: Requires versions %s and %s (Gradle is automatically using the highest version: %s)\nResolution: Consider aligning to a single version.", parentDetails.conflictVersion, parentDetails.version, parentDetails.version));
+                            parentNode.add("data-conflict", String.format("Conflict: Requires versions %s and %s. Resolution: Align to version %s.", parentDetails.conflictVersion, parentDetails.version, parentDetails.version));
+                            label += " (" + parentDetails.conflictVersion + " -> " + parentDetails.version + ")";
                         }
                         parentNode.add(Label.of(label)).add("data-configuration", parentDetails.configuration);
                     }
@@ -84,14 +85,15 @@ public class GraphService {
                             } else {
                                 parentNode.addLink(childNode);
                             }
-                            addedEdges.add(edgeKey); // Mark edge as added
+                            addedEdges.add(edgeKey);
                         }
                         DependencyDetails childDetails = dependencyDetailsMap.get(child);
                         if (childDetails != null) {
                             String label = String.format("%s:%s:%s", childDetails.group, childDetails.name, childDetails.version);
                             if (childDetails.conflictVersion != null) {
                                 label += " ⚠";
-                                childNode.add("data-conflict", String.format("Conflict: Requires versions %s and %s (Gradle is automatically using the highest version: %s)\nResolution: Consider aligning to a single version.", childDetails.conflictVersion, childDetails.version, childDetails.version));
+                                childNode.add("data-conflict", String.format("Conflict: Requires versions %s and %s. Resolution: Align to version %s.", childDetails.conflictVersion, childDetails.version, childDetails.version));
+                                label += " (" + childDetails.conflictVersion + " -> " + childDetails.version + ")";
                             }
                             childNode.add(Label.of(label)).add("data-configuration", childDetails.configuration);
                         }
@@ -178,7 +180,7 @@ public class GraphService {
         } else if (title.contains("testRuntimeOnly")) {
             return "testRuntimeOnly";
         }
-        return "implementation"; // Default configuration
+        return "implementation";
     }
 
     private void applyColor(MutableNode node, String name, String searchTerm) {
@@ -216,11 +218,11 @@ public class GraphService {
         engine.timeout(600, TimeUnit.SECONDS);
         Graphviz.useEngine(engine);
 
-        MutableGraph g = mutGraph("dependencies").setDirected(true).graphAttrs().add("rankdir", "LR");
+        MutableGraph g = mutGraph("dependencies").setDirected(true);
 
         for (Map<String, Map<String, List<String>>> chunk : allChunks) {
             Map<String, MutableNode> nodes = new HashMap<>();
-            Set<String> addedEdges = new HashSet<>(); // Track added edges
+            Set<String> addedEdges = new HashSet<>();
 
             for (Map.Entry<String, Map<String, List<String>>> titleEntry : chunk.entrySet()) {
                 String title = titleEntry.getKey();
@@ -241,7 +243,7 @@ public class GraphService {
                         String edgeKey = parent + "->" + child;
                         if (!addedEdges.contains(edgeKey)) {
                             parentNode.addLink(childNode);
-                            addedEdges.add(edgeKey); // Mark edge as added
+                            addedEdges.add(edgeKey);
                         }
                     }
                 }

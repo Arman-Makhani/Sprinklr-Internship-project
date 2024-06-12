@@ -25,19 +25,8 @@ public class DependencyParser {
                     continue;
                 }
 
-                // Detect configuration changes in the log
                 if (line.contains(" - implementation") || line.contains(" - api") || line.contains(" - runtimeOnly") || line.contains(" - testImplementation") || line.contains(" - testRuntimeOnly")) {
-                    if (line.contains(" - implementation")) {
-                        currentConfiguration = "implementation";
-                    } else if (line.contains(" - api")) {
-                        currentConfiguration = "api";
-                    } else if (line.contains(" - runtimeOnly")) {
-                        currentConfiguration = "runtimeOnly";
-                    } else if (line.contains(" - testImplementation")) {
-                        currentConfiguration = "testImplementation";
-                    } else if (line.contains(" - testRuntimeOnly")) {
-                        currentConfiguration = "testRuntimeOnly";
-                    }
+                    currentConfiguration = parseConfiguration(line);
                     continue;
                 }
 
@@ -60,11 +49,8 @@ public class DependencyParser {
                     stack.push(node);
                     dependencies.putIfAbsent(node.name, new ArrayList<>());
                 } else {
-                    String[] parts = line.split("\\s+", 2);
-                    if (parts.length < 2) continue;
-
                     int indentLevel = getIndentLevel(line);
-                    String dependency = stripPrefix(parts[1]).replaceAll("->.*", "").trim();
+                    String dependency = stripPrefix(line).replaceAll("->.*", "").trim();
 
                     while (!stack.isEmpty() && indentLevel <= stack.peek().indentLevel) {
                         stack.pop();
@@ -95,7 +81,8 @@ public class DependencyParser {
     }
 
     private static String stripPrefix(String line) {
-        return line.startsWith("+---") || line.startsWith("\\---") ? line.substring(4).trim() : line.trim();
+        int index = line.indexOf("---");
+        return (index != -1) ? line.substring(index + 3).trim() : line.trim();
     }
 
     private static int getIndentLevel(String line) {
@@ -104,7 +91,16 @@ public class DependencyParser {
             level++;
             line = line.substring(1);
         }
-        return level / 4; // Adjusted for accurate indentation level
+        return level / 4;
+    }
+
+    private static String parseConfiguration(String line) {
+        if (line.contains(" - implementation")) return "implementation";
+        if (line.contains(" - api")) return "api";
+        if (line.contains(" - runtimeOnly")) return "runtimeOnly";
+        if (line.contains(" - testImplementation")) return "testImplementation";
+        if (line.contains(" - testRuntimeOnly")) return "testRuntimeOnly";
+        return "implementation";
     }
 
     public static DependencyDetails parseDependencyDetails(String dependency, String configuration) {

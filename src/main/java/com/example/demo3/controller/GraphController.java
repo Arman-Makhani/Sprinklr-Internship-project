@@ -55,7 +55,7 @@ public class GraphController {
             Files.write(path, file.getBytes());
 
             // Parse and process the file in chunks
-            allChunks = DependencyParser.parseDependencies(path.toString(), 500); // Adjust chunk size as needed
+            allChunks = DependencyParser.parseDependencies(path.toString(), 1000); // Adjust chunk size as needed
             allDependencies = allChunks.stream()
                     .flatMap(chunk -> chunk.values().stream())
                     .flatMap(deps -> deps.keySet().stream())
