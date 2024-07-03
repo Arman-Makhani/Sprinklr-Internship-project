@@ -43,15 +43,21 @@ The Dependency Graph Visualizer is a web application that allows users to upload
     ```
 
 ### Running the Project
-1. Start the backend server:
-    ```bash
-    ./gradlew bootRun
-    ```
-
-2. Start the frontend development server:
+1. Build the frontend:
     ```bash
     cd frontend
-    npm start
+    npm run build
+    ```
+
+2. Copy the built static files to the backend's static resources directory:
+    ```bash
+    cp -r build/* ../src/main/resources/static/
+    ```
+
+3. Start the backend server:
+    ```bash
+    cd ..
+    ./gradlew bootRun
     ```
 
 ## Usage Guide
@@ -141,10 +147,10 @@ Circular dependencies are detected by building a graph of the dependencies and u
 The `DependencyParser` class reads the dependency file line by line, identifies the structure of the dependencies, and builds a hierarchical representation. It handles different configurations and resolves conflicts in dependency versions.
 
 ### How to Add a New Node Type in the Graph?
-Update the getNodeColor method in Graph.js to include the new node type and its color. 
+Update the `getNodeColor` method in `Graph.js` to include the new node type and its color. 
 
 ### How to Increase the Upload File Size Limit?
-Modify the spring.servlet.multipart.max-file-size and spring.servlet.multipart.max-request-size properties in application.properties. Currently, it is 10MB.
+Modify the `spring.servlet.multipart.max-file-size` and `spring.servlet.multipart.max-request-size` properties in `application.properties`. Currently, it is set to 10MB.
 
 ### How to Change the Layout of the Graph?
-Use the toggleGridArrangement and toggleLevelWiseArrangement methods exposed by the Graph component to switch between different layouts.
+Use the `toggleGridArrangement` and `toggleLevelWiseArrangement` methods exposed by the `Graph` component to switch between different layouts.
