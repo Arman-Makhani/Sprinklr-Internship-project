@@ -1,143 +1,150 @@
 # Dependency Graph Visualizer
 
 ## Table of Contents
-1. [Introduction](#introduction)
-2. [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-3. [Running the Project](#running-the-project)
-4. [Project Structure](#project-structure)
-5. [Usage Guide](#usage-guide)
-6. [Developer Guide](#developer-guide)
-    - [Prerequisites for Development](#prerequisites-for-development)
-    - [Understanding the Code](#understanding-the-code)
-    - [Extending the Project](#extending-the-project)
-7. [FAQ](#faq)
-
+- [Introduction](#introduction)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the Project](#running-the-project)
+- [Usage Guide](#usage-guide)
+- [Developer Guide](#developer-guide)
+  - [Prerequisites for Development](#prerequisites-for-development)
+  - [Understanding the Code](#understanding-the-code)
+  - [Extending the Project](#extending-the-project)
+- [FAQ](#faq)
 
 ## Introduction
-The Dependency Graph Visualizer is a tool designed to convert Gradle dependency logs into interactive and visual dependency graphs. It helps users understand their project's dependencies, identify issues such as unresolved dependencies, detect circular dependencies , and helps them refactor their code.
+The Dependency Graph Visualizer is a web application that allows users to upload dependency files and visualize them as graphs. The frontend is built using React and D3, while the backend is powered by Spring Boot.
 
 ## Getting Started
 
 ### Prerequisites
-Before you begin, ensure you have the following installed:
-
-- **Java Development Kit (JDK)**: Ensure you have JDK 20 or later installed. You can download it from [Oracle's website](https://www.oracle.com/java/technologies/downloads/). To check is if it is correctly installed run the command "java --version" on your terminal.
-- **Graphviz**: For rendering graphs. Install Graphviz from [Graphviz's official website](https://graphviz.org/download/) and run the command "dot -V" to check.
-- **Spring Boot**: Ensure you have Spring Boot installed. Spring Boot simplifies the creation of stand-alone, production-grade Spring-based applications.
-- **Gradle**: Make sure you have Gradle installed to handle dependencies and builds. Install it from [Gradle's official website](https://gradle.org/install/) and run the command "gradle -v" to check 
+- Java 17 or higher
+- Node.js 16 or higher
+- npm 7 or higher
+- Gradle 8.7
 
 ### Installation
-
-1. **Clone the Repository**:
+1. Clone the repository:
     ```bash
-    git clone https://github.com/Arman-Makhani/Sprinklr-Internship-project.git
-    cd dependency-graph-visualizer
+    git clone <repository-url>
+    cd <repository-directory>
     ```
 
-2. **Build the Project**:
+2. Install backend dependencies:
     ```bash
     ./gradlew build
     ```
 
-3. **Install Graphviz**:
-    Follow the instructions for your operating system from [Graphviz's official website](https://graphviz.org/download/).
+3. Install frontend dependencies:
+    ```bash
+    cd frontend
+    npm install
+    ```
 
-## Running the Project
-
-1. **Start the Application**:
+### Running the Project
+1. Start the backend server:
     ```bash
     ./gradlew bootRun
     ```
-    The application will be accessible at `http://localhost:8080`.
 
-2. **Access the Application**:
-    Open your browser and navigate to `http://localhost:8080`. You should see the upload page for your dependency logs.
-
-3. **Upload a Dependency Log**:
-    Upload your Gradle dependency log file to generate the dependency graph.
-
-## Project Structure
-
-The project follows a standard Gradle structure :
-
-
-- **`controller`**: Contains the Spring Boot controller for handling web requests. (src/main/java/com.example)
-- **`service`**: Contains the service logic for generating graphs. (src/main/java/com.example)
-- **`utils`**: Contains utility classes, including the dependency parser. (src/main/java/com.example)
-- **`templates`**: Thymeleaf templates for the web application. (src/main/resources)
-- **`static`**: Contains static files such as JavaScript and CSS. (src/main/resources)
+2. Start the frontend development server:
+    ```bash
+    cd frontend
+    npm start
+    ```
 
 ## Usage Guide
-
-1. **Upload Your Dependency Log**:
-   - Navigate to the upload page (`/`).
-   - Choose a Gradle dependency log file and click "Generate Graph".
-
-2. **View the Graph**:
-   - The result page will show an SVG representation of your dependency graph.
-   - Hover over nodes to view detailed information about each dependency.
-
-3. **Search Dependencies**:
-   - Use the search bar on the result page to find specific dependencies within the graph.
-
-4. **Highlight Circular Dependencies**:
-   - Click the "Show Circular Dependencies" button to highlight any circular dependencies in the graph.
-
-5. **Export Graph**:
-   - Click the "Download PNG" button to download the graph as a PNG file.
+1. Navigate to the home page and click on the "Upload Dependency File" button.
+2. Choose a `.log` or `.txt` file containing the Gradle dependencies.
+3. Click the "Generate Graph" button to visualize the dependency graph.
 
 ## Developer Guide
 
 ### Prerequisites for Development
-- **Java Development Kit (JDK)**: JDK 20 or later.
-- **Graphviz**: Installed and configured on your system.
-- **IDE**: IntelliJ IDEA or Eclipse for Java development.
-- **Gradle**: For managing dependencies and builds.
+- Java 17 or higher
+- Node.js 16 or higher
+- npm 7 or higher
+- Gradle 8.7
 
 ### Understanding the Code
+#### Frontend
 
-- **GraphController.java**:
-  - Handles HTTP requests for generating and displaying the dependency graph.
-  - Uses `GraphService` to perform backend operations.
+**Graph.js**
 
-- **GraphService.java**:
-  - Generates the dependency graph asynchronously using `Graphviz`.
-  - Contains logic for detecting circular dependencies and handling SVG generation.
+This component renders the dependency graph using D3.js. It supports different layouts (default, grid, level-wise) and allows interaction with the nodes, such as clicking and dragging.
 
-- **DependencyParser.java**:
-  - Parses the Gradle dependency log file into structured data.
-  - Splits dependencies into manageable chunks for processing.
+**GraphResult.js**
+
+This is the main component that manages the graph visualization state and interactions. It handles the fetching of graph data, the display of the graph, and interactions such as node clicks and layout changes.
+
+**Home.js**
+
+Displays the landing page with a welcome message and a link to the upload page.
+
+**SearchBar.js**
+
+Provides an input field for searching nodes in the graph. It fetches and displays search suggestions as the user types.
+
+**SidePanel.js**
+
+Displays details of the selected node and allows navigation to its child nodes. It also provides a button to toggle the display of the graph.
+
+**Upload.js**
+
+Provides a form to upload the dependency file. It validates the file format and initiates the graph generation process upon submission.
+
+**GraphPage.js**
+
+A wrapper for the `Graph` component, ensuring it re-renders when the graph data changes. It also handles node clicks to distinguish between different types of nodes.
+
+#### Backend
+
+**WebConfig.java**
+
+Configures CORS and resource handlers for serving static files and enabling cross-origin requests from the frontend.
+
+**GraphController.java**
+
+Handles API requests for generating and retrieving graph data. It includes endpoints for file upload, fetching graph data, searching nodes, and getting autocomplete suggestions.
+
+**GraphService.java**
+
+Provides methods to parse dependency files and generate graph data. It uses the Graphviz library to create SVG representations of the dependency graphs.
+
+**DependencyParser.java**
+
+Contains methods to parse Gradle dependency files and detect circular dependencies. It processes the input files and structures the dependency information for graph generation.
 
 ### Extending the Project
-
-1. **Adding New Features**:
-   - Make the nodes clickable , so that user can see only the necessary paths. If there are multiple paths , a side panel will open from which user can choose their own path.
-   - Improving the visualization for huge dependency files.
-
-2. **Improving the UI**:
-   
-3. Deploying in Sprinklr's QA instance
-
-### Logic and Explanation
-
-- **Asynchronous Processing**: The project uses asynchronous processing to handle large dependency graphs without blocking the main thread. This is implemented using the `@Async` annotation in `GraphService`.
-- **Graphviz Integration**: The project integrates with Graphviz to generate dependency graphs in SVG format. This allows for clear visualization and easy manipulation of graph data.
-- **Dependency Parsing**: The `DependencyParser` class reads and parses the dependency logs. It handles large files by processing them in chunks to avoid memory overload and improve performance.
+1. **Optimization**: Implement asynchronous processing using `@EnableAsync` to generate the graph incrementally. This can improve performance and allow the application to handle larger files more efficiently.
+2. **Future Scopes**:
+   - **Real-time Updates**: Implement WebSockets to provide real-time updates of the graph as the dependency file is being processed.
+   - **Advanced Search**: Enhance the search functionality to support complex queries and filtering options.
+   - **Enhanced Visualization**: Add more visualization options, such as different node shapes and edge styles to represent various dependency types.
 
 ## FAQ
 
-**Q1**: How do I upload my dependency log file?
-- Navigate to the home page, select your Gradle dependency log file, and click "Generate Graph".
+### Buttons and Their Functions
+- **Upload Dependency File**: Opens a dialog to select a dependency file for upload.
+- **Generate Graph**: Processes the uploaded file and generates the dependency graph.
+- **Arrange in Grid**: Organizes the nodes in a grid layout for better readability.
+- **Settle Levelwise**: Arranges the nodes in a level-wise structure based on their hierarchy.
+- **Show Circular Dependencies**: Highlights nodes and edges that are part of circular dependencies.
+- **Hide Circular Dependencies**: Hides the highlighted circular dependencies.
+- **Reset**: Resets the graph to its initial state.
 
-**Q2**: What do the colors in the graph mean?
-- Red (n): Not resolved dependencies.
-- Green (c): Constraints.
-- Yellow (*): Omitted or previously used dependencies.
+### Detecting Circular Dependencies
+Circular dependencies are detected by building a graph of the dependencies and using a depth-first search (DFS) algorithm to find cycles. The `GraphService` class implements this functionality, marking edges that form part of a cycle.
 
-**Q3**: How can I highlight circular dependencies?
-- Click the "Show Circular Dependencies" button on the result page.
+### Parsing the File
+The `DependencyParser` class reads the dependency file line by line, identifies the structure of the dependencies, and builds a hierarchical representation. It handles different configurations and resolves conflicts in dependency versions.
 
+### How to Add a New Node Type in the Graph?
+Update the getNodeColor method in Graph.js to include the new node type and its color. 
 
+### How to Increase the Upload File Size Limit?
+Modify the spring.servlet.multipart.max-file-size and spring.servlet.multipart.max-request-size properties in application.properties. Currently, it is 10MB.
 
+### How to Change the Layout of the Graph?
+Use the toggleGridArrangement and toggleLevelWiseArrangement methods exposed by the Graph component to switch between different layouts.
