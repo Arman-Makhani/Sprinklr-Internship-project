@@ -1,0 +1,13 @@
+/* frontend/src/components/ProjectSelector.css */
+.project-selector {
+  margin-bottom: 20px;
+}
+
+.project-selector label {
+  margin-right: 10px;
+}
+
+.project-selector select {
+  padding: 5px;
+  font-size: 16px;
+}

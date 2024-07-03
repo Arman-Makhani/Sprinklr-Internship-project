@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Graph Result</title>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
     <style>
         .search-container {
             position: relative;
@@ -72,23 +71,28 @@
             font-size: 0.9em;
             color: #333;
         }
+        .highlighted {
+            stroke: yellow;
+            stroke-width: 3px;
+        }
+        .project-name {
+            font-weight: bold;
+            color: #007bff;
+        }
     </style>
 </head>
 <body>
 <div>
     <h1>Dependency Graphs</h1>
-    <form id="searchForm" method="post" th:action="@{/search}" onsubmit="event.preventDefault(); searchGraph();">
+    <form id="searchForm" method="post" action="/search" onsubmit="event.preventDefault(); searchGraph();">
         <div class="search-container">
-            <input type="hidden" name="filePath" th:value="${filePath}" />
-            <input type="text" id="searchTerm" name="searchTerm" class="search-input" placeholder="Search dependencies" th:value="${searchTerm}" autocomplete="off"/>
+            <input type="text" id="searchTerm" name="searchTerm" class="search-input" placeholder="Search dependencies" autocomplete="off" />
             <button type="button" class="reset-btn" onclick="resetGraph()">&#10006;</button>
         </div>
     </form>
     <button id="exportPng" class="export-btn">Download PNG</button>
     <button id="highlightCircularDeps" class="highlight-btn">Show Circular Dependencies</button>
-    <div th:each="svg : ${graphs}">
-        <div th:utext="${svg}"></div>
-    </div>
+    <div id="graphContainer"></div>
     <div class="note">
         <strong>Note:</strong><br>
         - <span style="color: lightcoral;">(n)</span> represents not resolved dependencies.<br>
@@ -104,10 +108,10 @@
         $("#searchTerm").autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: "/autocomplete",
+                    url: "/api/search-suggestions",
                     dataType: "json",
                     data: {
-                        term: request.term
+                        query: request.term
                     },
                     success: function(data) {
                         response(data);
@@ -143,7 +147,7 @@
                 dataType: "json",
                 success: function(data) {
                     data.forEach(function(edge) {
-                        $(`g.edge > title:contains('${edge}')`).parent().addClass("circular-dependency");
+                        $(g.edge > title:contains('${edge}')).parent().addClass("circular-dependency");
                     });
                 }
             });
@@ -206,12 +210,38 @@
     });
 
     function searchGraph() {
-        document.getElementById('searchForm').submit();
+        const query = $("#searchTerm").val();
+        if (query.length > 1) {
+            $.ajax({
+                url: `/api/search-node?node=${query}`,
+                dataType: "text",
+                success: function(data) {
+                    $('#graphContainer').html(data);
+                    highlightNode(query);
+                },
+                error: function() {
+                    alert("Error fetching graph data");
+                }
+            });
+        }
+    }
+
+    function highlightNode(node) {
+        const nodes = $('#graphContainer g.node');
+        nodes.each(function() {
+            const title = $(this).find('title').text();
+            const [projectName, nodeName] = title.split(': ', 2);
+            if (nodeName === node || title === node) {
+                $(this).addClass('highlighted');
+            } else {
+                $(this).removeClass('highlighted');
+            }
+        });
     }
 
     function resetGraph() {
-        document.getElementById('searchTerm').value = '';
-        searchGraph();
+        $("#searchTerm").val('');
+        $('#graphContainer').html('');
     }
 </script>
 </body>

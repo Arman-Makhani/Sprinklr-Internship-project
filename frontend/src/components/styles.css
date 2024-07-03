@@ -1,0 +1,45 @@
+/* frontend/src/components/styles.css */
+
+
+.side-panel {
+  width: 300px;
+  padding: 20px;
+  background-color: #333;
+  border-radius: 8px;
+  margin-left: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  color: #61dafb;
+}
+
+.side-panel button {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #61dafb;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.side-panel ul {
+  list-style: none;
+  padding: 0;
+}
+
+.side-panel li {
+  margin-bottom: 10px;
+}
+
+/* Blinking animation */
+@keyframes blink-animation {
+    50% {
+        opacity: 0;
+    }
+}
+
+.blinking {
+    animation: blink-animation 1s step-start infinite;
+}

@@ -1,0 +1,68 @@
+/* frontend/src/components/SearchBar.css */
+.search-bar {
+  position: relative;
+  width: 300px;
+}
+
+.search-input {
+  width: calc(100% - 80px);
+  padding: 10px;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+}
+
+.search-button {
+  width: 80px;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  z-index: 1000;
+}
+
+.suggestion-item {
+  padding: 10px;
+  cursor: pointer;
+  color: #333;
+}
+
+.suggestion-item:hover {
+  background-color: #f1f1f1;
+}
+
+/* frontend/src/components/GraphResult.css */
+/* ... (keep existing styles) */
+
+.reset-button {
+  padding: 10px 15px;
+  background-color: #916BBF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-left: 10px;
+}
+
+.reset-button:hover {
+  background-color: #C996CC;
+}
+
+/* ... (keep other styles) */

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.*;
 
 public class DependencyParser {
-
     public static List<Map<String, Map<String, List<String>>>> parseDependencies(String filePath, int chunkSize) throws IOException {
         List<Map<String, Map<String, List<String>>>> allChunks = new ArrayList<>();
         Map<String, Map<String, List<String>>> currentChunk = new LinkedHashMap<>();
@@ -14,6 +13,8 @@ public class DependencyParser {
         Deque<DependencyNode> stack = new ArrayDeque<>();
         boolean parsingDependencies = false;
         String currentTitle = null;
+        String currentProject = null;
+
         int lineCount = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -21,6 +22,14 @@ public class DependencyParser {
             String currentConfiguration = "implementation"; // Default configuration
 
             while ((line = br.readLine()) != null) {
+                if (line.startsWith("------------------------------------------------------------")) {
+                    line = br.readLine(); // Read the next line for project name
+                    if (line != null && (line.startsWith("Project") || line.startsWith("Root project"))) {
+                        currentProject = line.trim();
+                        continue;
+                    }
+                }
+
                 if (line.startsWith("> Task")) {
                     continue;
                 }
@@ -32,9 +41,11 @@ public class DependencyParser {
 
                 if (line.startsWith("Resolved dependencies:") || line.contains(" - ")) {
                     parsingDependencies = true;
-                    currentTitle = line.trim();
+                    currentTitle = currentProject + ": " + line.trim();
                     dependencies = new LinkedHashMap<>();
                     currentChunk.put(currentTitle, dependencies);
+                    dependencies.put(currentTitle, new ArrayList<>());
+                    System.out.println("Parsing dependencies for: " + currentTitle);// Initialize list for direct children
                     continue;
                 }
 
@@ -48,6 +59,7 @@ public class DependencyParser {
                     stack.clear();
                     stack.push(node);
                     dependencies.putIfAbsent(node.name, new ArrayList<>());
+                    dependencies.get(currentTitle).add(node.name); // Add this line to identify direct children of the title node
                 } else {
                     int indentLevel = getIndentLevel(line);
                     String dependency = stripPrefix(line).replaceAll("->.*", "").trim();
@@ -75,6 +87,7 @@ public class DependencyParser {
 
         if (!currentChunk.isEmpty()) {
             allChunks.add(currentChunk);
+            System.out.println("Added final chunk: " + currentChunk);
         }
 
         return allChunks;
@@ -117,18 +130,6 @@ public class DependencyParser {
         return new DependencyDetails(group, name, version, conflictVersion, configuration);
     }
 
-    private static class DependencyNode {
-        String name;
-        int indentLevel;
-        DependencyDetails details;
-
-        DependencyNode(String name, int indentLevel, DependencyDetails details) {
-            this.name = name;
-            this.indentLevel = indentLevel;
-            this.details = details;
-        }
-    }
-
     public static class DependencyDetails {
         public String group;
         public String name;
@@ -152,6 +153,23 @@ public class DependencyParser {
             if (conflictVersion != null) map.put("Conflict Version", conflictVersion);
             map.put("Configuration", configuration);
             return map;
+        }
+
+        @Override
+        public String toString() {
+            return "Group: " + group + ", Name: " + name + ", Version: " + version + (conflictVersion != null ? ", Conflict Version: " + conflictVersion : "") + ", Configuration: " + configuration;
+        }
+    }
+
+    private static class DependencyNode {
+        String name;
+        int indentLevel;
+        DependencyDetails details;
+
+        DependencyNode(String name, int indentLevel, DependencyDetails details) {
+            this.name = name;
+            this.indentLevel = indentLevel;
+            this.details = details;
         }
     }
 }

@@ -1,0 +1,411 @@
+/* GraphResult.css */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  background-color: #1C0C5B;
+  color: #C996CC;
+  font-family: 'Arial', sans-serif;
+}
+
+.graph-result-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.search-and-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #3D2C8D;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.search-bar {
+  flex-grow: 1;
+  margin-right: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #916BBF;
+  color: white;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.search-clear {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.control-button {
+  padding: 10px 15px;
+  background-color: #916BBF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.control-button:hover {
+  background-color: #C996CC;
+}
+
+.graph-and-panel {
+  display: flex;
+  gap: 20px;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+#graph-container {
+  flex-grow: 1;
+  background-color: #3D2C8D;
+  border-radius: 10px;
+  overflow: auto;
+}
+
+.side-panel {
+  width: 300px;
+  background-color: #3D2C8D;
+  border-radius: 10px;
+  padding: 20px;
+  color: #C996CC;
+  overflow-y: auto;
+}
+
+.side-panel h2, .side-panel h3 {
+  color: #916BBF;
+  margin-bottom: 15px;
+}
+
+.side-panel button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #916BBF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.side-panel button:hover {
+  background-color: #C996CC;
+}
+
+.side-panel ul {
+  list-style: none;
+  padding: 0;
+}
+
+.side-panel li {
+  margin-bottom: 10px;
+}
+
+.circular-dependencies-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #916BBF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.circular-dependencies-button:hover {
+  background-color: #C996CC;
+}
+
+.circular-dependencies-list {
+  margin-top: 20px;
+  background-color: #3D2C8D;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.circular-dependencies-list h3 {
+  color: #916BBF;
+  margin-bottom: 15px;
+}
+
+.circular-dependencies-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.circular-dependencies-list li {
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: #C996CC;
+}
+
+.circular-dependencies-list li:hover {
+  color: #916BBF;
+}
+.graph-result-container {
+  height: 100vh;
+  width: 100vw;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  padding-right: 30px; /* Make room for the cross button */
+}
+
+.search-clear {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.control-button {
+  min-width: 150px; /* Increase the minimum width of the button */
+}
+
+/* GraphResult.css */
+
+.search-and-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #3D2C8D;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.search-bar {
+  flex-grow: 1;
+  margin-right: 20px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #916BBF;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.search-input {
+  width: calc(100% - 30px); /* Adjust width to accommodate the cross button */
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+  color: white;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.search-clear {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+}
+
+.suggestions-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #3D2C8D;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #916BBF;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  z-index: 1000;
+}
+
+.suggestion-item {
+  padding: 10px;
+  cursor: pointer;
+  color: #C996CC;
+}
+
+.suggestion-item:hover {
+  background-color: #916BBF;
+}
+
+#graph-container {
+  flex-grow: 1;
+  background-color: #3D2C8D;
+  border-radius: 10px;
+  overflow: auto;
+  max-height: calc(100vh - 150px);
+}
+
+.graph-and-panel {
+  display: flex;
+  gap: 20px;
+  flex-grow: 1;
+  overflow: hidden;
+  height: calc(100vh - 100px);
+}
+
+/* frontend/src/components/GraphResult.css */
+/* ... (keep existing styles) */
+
+#graph-container {
+  flex-grow: 1;
+  background-color: #3D2C8D;
+  border-radius: 10px;
+  overflow: auto;
+  max-height: calc(100vh - 150px);
+}
+
+.graph-and-panel {
+  display: flex;
+  gap: 20px;
+  flex-grow: 1;
+  overflow: hidden;
+  height: calc(100vh - 100px);
+}
+
+/* Add these styles to your existing GraphResult.css file */
+
+.graph-result-container {
+  height: 100vh;
+  width: 100vw;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#graph-container {
+  flex-grow: 1;
+  background-color: #3D2C8D;
+  border-radius: 10px;
+  overflow: auto;
+  max-height: calc(100vh - 150px);
+}
+
+.graph-and-panel {
+  display: flex;
+  gap: 20px;
+  flex-grow: 1;
+  overflow: hidden;
+  height: calc(100vh - 100px);
+}
+
+#graph-container {
+  flex-grow: 1;
+  background-color: #3D2C8D;
+  border-radius: 10px;
+  overflow: auto;
+  max-height: calc(100vh - 150px);
+  max-width: 100%;
+}
+
+.graph-and-panel {
+  display: flex;
+  gap: 20px;
+  flex-grow: 1;
+  overflow: hidden;
+  height: calc(100vh - 100px);
+}
+
+/* Add this to GraphResult.css */
+.control-button,
+.reset-button,
+.side-panel button {
+  position: relative;
+}
+
+.control-button:hover::after,
+.reset-button:hover::after,
+.side-panel button:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 1000;
+  font-size: 12px;
+}
+
+.title-node-selector {
+  background-color: #3D2C8D;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.title-node-selector h3 {
+  color: #916BBF;
+  margin-bottom: 15px;
+}
+
+.title-node-selector ul {
+  list-style: none;
+  padding: 0;
+}
+
+.title-node-selector li {
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: #C996CC;
+}
+
+.title-node-selector li:hover {
+  color: #916BBF;
+}
+
+
+
