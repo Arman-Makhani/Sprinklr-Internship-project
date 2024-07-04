@@ -19,7 +19,7 @@ const Upload = () => {
       setMessage('Please select a .log or .txt file.');
     }
   };
-
+//validate
  const validateGradleStructure = (content) => {
    const lines = content.split('\n');
    let inDependencyBlock = false;
