@@ -80,7 +80,11 @@ const Upload = () => {
    reader.onload = async (e) => {
      const content = e.target.result;
      if (!validateGradleStructure(content)) {
-       setMessage('The file does not contain a valid Gradle dependency structure. Please check and re-upload.');
+       setMessage(
+         'The file does not contain a valid Gradle dependency structure. ' +
+         'Please check and re-upload. ' +
+         'Click <a href="/sample-gradle-file.txt" target="_blank">here</a> to see a sample file.'
+       );
        return;
      }
 
@@ -105,30 +109,30 @@ const Upload = () => {
  };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h1 style={styles.title}>Dependency Graph Visualizer</h1>
-        <p style={styles.subtitle}>Upload your file to generate a graph</p>
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <button type="button" onClick={() => document.getElementById('fileInput').click()} style={styles.fileInput}>
-            {fileName || 'Choose a .log or .txt file'}
-          </button>
-          <input
-            id="fileInput"
-            type="file"
-            onChange={handleFileChange}
-            accept=".log,.txt"
-            style={{ display: 'none' }}
-          />
-          <button type="submit" style={styles.button}>
-            Generate Graph
-          </button>
-        </form>
-        {message && <p style={styles.message}>{message}</p>}
+      <div style={styles.container}>
+        <div style={styles.card}>
+          <h1 style={styles.title}>Dependency Graph Visualizer</h1>
+          <p style={styles.subtitle}>Upload your file to generate a graph</p>
+          <form onSubmit={handleSubmit} style={styles.form}>
+            <button type="button" onClick={() => document.getElementById('fileInput').click()} style={styles.fileInput}>
+              {fileName || 'Choose a .log or .txt file'}
+            </button>
+            <input
+              id="fileInput"
+              type="file"
+              onChange={handleFileChange}
+              accept=".log,.txt"
+              style={{ display: 'none' }}
+            />
+            <button type="submit" style={styles.button}>
+              Generate Graph
+            </button>
+          </form>
+          {message && <p style={styles.message} dangerouslySetInnerHTML={{ __html: message }} />}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
 const styles = {
   container: {
