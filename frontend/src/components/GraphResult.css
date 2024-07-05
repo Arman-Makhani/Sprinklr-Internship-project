@@ -210,7 +210,6 @@ body {
   min-width: 150px; /* Increase the minimum width of the button */
 }
 
-/* GraphResult.css */
 
 .search-and-controls {
   display: flex;
@@ -295,8 +294,6 @@ body {
   height: calc(100vh - 100px);
 }
 
-/* frontend/src/components/GraphResult.css */
-/* ... (keep existing styles) */
 
 #graph-container {
   flex-grow: 1;
@@ -314,7 +311,7 @@ body {
   height: calc(100vh - 100px);
 }
 
-/* Add these styles to your existing GraphResult.css file */
+
 
 .graph-result-container {
   height: 100vh;
@@ -356,7 +353,7 @@ body {
   height: calc(100vh - 100px);
 }
 
-/* Add this to GraphResult.css */
+
 .control-button,
 .reset-button,
 .side-panel button {

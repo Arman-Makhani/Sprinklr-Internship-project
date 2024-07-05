@@ -31,7 +31,7 @@ const Home = () => {
     position: 'relative',
     zIndex: 1,
     textAlign: 'center',
-    marginBottom: '3%', // Add some bottom margin to lift it slightly from the bottom
+    marginBottom: '3%',
   };
 
   const titleStyle = {

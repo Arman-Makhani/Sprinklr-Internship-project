@@ -4,7 +4,6 @@ import Graph from '../components/Graph';
 
 const GraphPage = ({ onNodeClick, graphData, onTitleNodeClick }) => {
   useEffect(() => {
-    // Use effect to re-render when graphData changes
   }, [graphData]);
 
   const handleNodeClick = (nodeId) => {
